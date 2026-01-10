@@ -1,0 +1,16 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="630" viewBox="0 0 1200 630">
+  <defs>
+    <linearGradient id="bg" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#0f172a" />
+      <stop offset="100%" stop-color="#111827" />
+    </linearGradient>
+  </defs>
+  <rect width="1200" height="630" fill="url(#bg)" />
+  <g fill="none" stroke="#22d3ee" stroke-width="2" opacity="0.35">
+    <circle cx="220" cy="180" r="90" />
+    <circle cx="980" cy="420" r="120" />
+    <circle cx="620" cy="300" r="220" />
+  </g>
+  <text x="600" y="290" text-anchor="middle" fill="#e5e7eb" font-family="'Inter', 'Segoe UI', sans-serif" font-size="54" font-weight="700">Prawdziwy rozmiar</text>
+  <text x="600" y="350" text-anchor="middle" fill="#9ca3af" font-family="'Inter', 'Segoe UI', sans-serif" font-size="28" font-weight="500">Przeciągaj kraje i porównuj ich realną powierzchnię</text>
+</svg>
