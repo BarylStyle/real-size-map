@@ -88,23 +88,23 @@ function MapEventHandler(props: MapProps) {
         polygon.setLatLngs(reconstructLatLngs(allCenteredProjectedCoords[index]));
       });
       
-      const startDrag = (e: L.LeafletMouseEvent) => {
+      draggableLayer.on('mousedown', (e: L.LeafletMouseEvent) => {
         L.DomEvent.preventDefault(e.originalEvent);
         map.dragging.disable();
-
+        
         const currentLayerBounds = draggableLayer.getBounds();
         const shapeCenterLatLng = currentLayerBounds.getCenter();
         const shapeCenterPoint = map.project(shapeCenterLatLng, map.getZoom());
-
+        
         const clickPoint = map.project(e.latlng, map.getZoom());
         const startScale = getTrueSizeScale(selected.originalLat, shapeCenterLatLng.lat, scaleMultiplier);
         const offset = clickPoint.subtract(shapeCenterPoint).divideBy(startScale);
-
-        const onPointerMove = (moveEvent: L.LeafletMouseEvent) => {
-          const movePoint = map.project(moveEvent.latlng, map.getZoom());
+        
+        const onMouseMove = (moveEvent: L.LeafletMouseEvent) => {
+          const mousePoint = map.project(moveEvent.latlng, map.getZoom());
           const newScale = getTrueSizeScale(selected.originalLat, moveEvent.latlng.lat, scaleMultiplier);
-          const newCenterPoint = movePoint.subtract(offset.multiplyBy(newScale));
-
+          const newCenterPoint = mousePoint.subtract(offset.multiplyBy(newScale));
+          
           requestAnimationFrame(() => {
             allPolygonLayers.forEach((polygon, index) => {
               const reconstructLatLngs = (coords: any): any => {
@@ -119,23 +119,19 @@ function MapEventHandler(props: MapProps) {
           });
         };
 
-        const endDrag = (upEvent: L.LeafletMouseEvent) => {
+        const onMouseUp = (upEvent: L.LeafletMouseEvent) => {
           map.dragging.enable();
-          map.off('pointermove', onPointerMove);
-          map.off('pointerup', endDrag);
-          map.off('pointercancel', endDrag);
+          map.off('mousemove', onMouseMove);
+          map.off('mouseup', onMouseUp);
 
           const finalScale = getTrueSizeScale(selected.originalLat, upEvent.latlng.lat, scaleMultiplier);
           const finalCenterPoint = map.project(upEvent.latlng, map.getZoom()).subtract(offset.multiplyBy(finalScale));
           onCountryMove(selected.code, map.unproject(finalCenterPoint, map.getZoom()));
         };
 
-        map.on('pointermove', onPointerMove);
-        map.on('pointerup', endDrag);
-        map.on('pointercancel', endDrag);
-      };
-
-      draggableLayer.on('pointerdown', startDrag);
+        map.on('mousemove', onMouseMove);
+        map.on('mouseup', onMouseUp);
+      });
 
       draggableLayersRef.current[selected.code] = draggableLayer;
     });
