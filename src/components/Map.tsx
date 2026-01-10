@@ -133,6 +133,52 @@ function MapEventHandler(props: MapProps) {
         map.on('mouseup', onMouseUp);
       });
 
+      // Touch drag support for mobile
+      draggableLayer.on('touchstart', (e: L.LeafletMouseEvent) => {
+        L.DomEvent.preventDefault(e.originalEvent);
+        map.dragging.disable();
+
+        const currentLayerBounds = draggableLayer.getBounds();
+        const shapeCenterLatLng = currentLayerBounds.getCenter();
+        const shapeCenterPoint = map.project(shapeCenterLatLng, map.getZoom());
+
+        const touchPoint = map.project(e.latlng, map.getZoom());
+        const startScale = getTrueSizeScale(selected.originalLat, shapeCenterLatLng.lat, scaleMultiplier);
+        const offset = touchPoint.subtract(shapeCenterPoint).divideBy(startScale);
+
+        const onTouchMove = (moveEvent: L.LeafletMouseEvent) => {
+          const touchMovePoint = map.project(moveEvent.latlng, map.getZoom());
+          const newScale = getTrueSizeScale(selected.originalLat, moveEvent.latlng.lat, scaleMultiplier);
+          const newCenterPoint = touchMovePoint.subtract(offset.multiplyBy(newScale));
+
+          requestAnimationFrame(() => {
+            allPolygonLayers.forEach((polygon, index) => {
+              const reconstructLatLngs = (coords: any): any => {
+                if (Array.isArray(coords) && Array.isArray(coords[0])) return coords.map(reconstructLatLngs);
+                return (coords as L.Point[]).map(p => {
+                  const scaledPoint = newCenterPoint.add(p.multiplyBy(newScale));
+                  return map.unproject(scaledPoint, map.getZoom());
+                });
+              };
+              polygon.setLatLngs(reconstructLatLngs(allCenteredProjectedCoords[index]));
+            });
+          });
+        };
+
+        const onTouchEnd = (upEvent: L.LeafletMouseEvent) => {
+          map.dragging.enable();
+          map.off('touchmove', onTouchMove);
+          map.off('touchend', onTouchEnd);
+
+          const finalScale = getTrueSizeScale(selected.originalLat, upEvent.latlng.lat, scaleMultiplier);
+          const finalCenterPoint = map.project(upEvent.latlng, map.getZoom()).subtract(offset.multiplyBy(finalScale));
+          onCountryMove(selected.code, map.unproject(finalCenterPoint, map.getZoom()));
+        };
+
+        map.on('touchmove', onTouchMove);
+        map.on('touchend', onTouchEnd);
+      });
+
       draggableLayersRef.current[selected.code] = draggableLayer;
     });
 
