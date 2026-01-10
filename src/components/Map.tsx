@@ -133,24 +133,53 @@ function MapEventHandler(props: MapProps) {
         map.on('mouseup', onMouseUp);
       });
 
-      // Touch drag support for mobile
-      draggableLayer.on('touchstart', (e: L.LeafletMouseEvent) => {
-        L.DomEvent.preventDefault(e.originalEvent);
+      // Touch drag support for mobile - handle directly from DOM
+      const mapElement = map.getContainer();
+      let isTouching = false;
+      
+      mapElement.addEventListener('touchstart', (e: TouchEvent) => {
+        // Check if touch started on this layer
+        const touch = e.touches[0];
+        if (!touch) return;
+        
+        // Get pixel coordinates
+        const rect = mapElement.getBoundingClientRect();
+        const x = touch.clientX - rect.left;
+        const y = touch.clientY - rect.top;
+        
+        // Convert to lat/lng
+        const latlng = map.containerPointToLatLng(L.point(x, y));
+        
+        // Check if point is within bounds of this draggable layer
+        const bounds = draggableLayer.getBounds();
+        if (!bounds.contains(latlng)) return;
+        
+        isTouching = true;
+        L.DomEvent.preventDefault(e);
         map.dragging.disable();
-
+        
         const currentLayerBounds = draggableLayer.getBounds();
         const shapeCenterLatLng = currentLayerBounds.getCenter();
         const shapeCenterPoint = map.project(shapeCenterLatLng, map.getZoom());
-
-        const touchPoint = map.project(e.latlng, map.getZoom());
+        
+        const touchPoint = map.project(latlng, map.getZoom());
         const startScale = getTrueSizeScale(selected.originalLat, shapeCenterLatLng.lat, scaleMultiplier);
         const offset = touchPoint.subtract(shapeCenterPoint).divideBy(startScale);
-
-        const onTouchMove = (moveEvent: L.LeafletMouseEvent) => {
-          const touchMovePoint = map.project(moveEvent.latlng, map.getZoom());
-          const newScale = getTrueSizeScale(selected.originalLat, moveEvent.latlng.lat, scaleMultiplier);
+        
+        const onTouchMove = (moveEvent: TouchEvent) => {
+          if (!isTouching) return;
+          
+          const touch = moveEvent.touches[0];
+          if (!touch) return;
+          
+          const x = touch.clientX - rect.left;
+          const y = touch.clientY - rect.top;
+          const touchMoveLatlng = map.containerPointToLatLng(L.point(x, y));
+          const touchMovePoint = map.project(touchMoveLatlng, map.getZoom());
+          
+          const newScale = getTrueSizeScale(selected.originalLat, touchMoveLatlng.lat, scaleMultiplier);
           const newCenterPoint = touchMovePoint.subtract(offset.multiplyBy(newScale));
-
+          
           requestAnimationFrame(() => {
             allPolygonLayers.forEach((polygon, index) => {
               const reconstructLatLngs = (coords: any): any => {
@@ -164,20 +193,29 @@ function MapEventHandler(props: MapProps) {
             });
           });
         };
-
-        const onTouchEnd = (upEvent: L.LeafletMouseEvent) => {
+        
+        const onTouchEnd = (endEvent: TouchEvent) => {
+          if (!isTouching) return;
+          
+          isTouching = false;
           map.dragging.enable();
-          map.off('touchmove', onTouchMove);
-          map.off('touchend', onTouchEnd);
-
-          const finalScale = getTrueSizeScale(selected.originalLat, upEvent.latlng.lat, scaleMultiplier);
-          const finalCenterPoint = map.project(upEvent.latlng, map.getZoom()).subtract(offset.multiplyBy(finalScale));
+          mapElement.removeEventListener('touchmove', onTouchMove);
+          mapElement.removeEventListener('touchend', onTouchEnd);
+          
+          const touch = endEvent.changedTouches[0];
+          if (!touch) return;
+          
+          const x = touch.clientX - rect.left;
+          const y = touch.clientY - rect.top;
+          const endLatlng = map.containerPointToLatLng(L.point(x, y));
+          const finalScale = getTrueSizeScale(selected.originalLat, endLatlng.lat, scaleMultiplier);
+          const finalCenterPoint = map.project(endLatlng, map.getZoom()).subtract(offset.multiplyBy(finalScale));
           onCountryMove(selected.code, map.unproject(finalCenterPoint, map.getZoom()));
         };
-
-        map.on('touchmove', onTouchMove);
-        map.on('touchend', onTouchEnd);
-      });
+        
+        mapElement.addEventListener('touchmove', onTouchMove);
+        mapElement.addEventListener('touchend', onTouchEnd);
+      }, false);
 
       draggableLayersRef.current[selected.code] = draggableLayer;
     });
