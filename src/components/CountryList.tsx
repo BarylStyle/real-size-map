@@ -18,7 +18,7 @@ export function CountryList({ countries, onRemove }: CountryListProps) {
         {countries.map((country) => (
           <div
             key={country.code}
-            className="flex items-center justify-between p-3 bg-[#2a2a2a] rounded-lg hover:bg-[#323232] transition-colors"
+            className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3 p-3 bg-[#2a2a2a] rounded-lg hover:bg-[#323232] transition-colors"
           >
             <div className="flex items-center space-x-3">
               <div
@@ -32,7 +32,7 @@ export function CountryList({ countries, onRemove }: CountryListProps) {
                 </div>
               </div>
             </div>
-            <div className="flex items-center space-x-2">
+            <div className="flex items-center justify-between sm:justify-end w-full sm:w-auto space-x-2">
               <div className="text-xs text-gray-500 flex items-center">
                 <Move className="w-3 h-3 mr-1" />
                 Przeciągnij aby przenieść

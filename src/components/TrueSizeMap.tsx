@@ -89,15 +89,15 @@ export function TrueSizeMap() {
   }
 
   return (
-    <div className="h-screen bg-[#121212] flex flex-col">
+    <div className="min-h-screen bg-[#121212] flex flex-col">
       <header className="bg-[#1e1e1e] shadow-sm border-b border-gray-700 flex-shrink-0">
         <div className="px-4 py-3">
-          <h1 className="text-2xl font-bold text-white">Rzeczywisty Rozmiar</h1>
-          <p className="text-sm text-gray-400 mt-1">Porównaj rzeczywiste rozmiary krajów, przeciągając je po mapie</p>
+          <h1 className="text-2xl md:text-3xl font-bold text-white">Rzeczywisty Rozmiar</h1>
+          <p className="text-sm md:text-base text-gray-400 mt-1">Porównaj rzeczywiste rozmiary krajów, przeciągając je po mapie</p>
         </div>
       </header>
-      <div className="flex-1 flex min-h-0">
-        <div className="flex-1 relative">
+      <div className="flex-1 flex flex-col md:flex-row min-h-0 gap-4 md:gap-0 p-4 md:p-0">
+        <div className="flex-1 relative h-[60vh] md:h-auto md:min-h-0">
           {geoData && (
             // PRZEKAZUJEMY NOWY PROP - scaleMultiplier
             <Map
@@ -109,7 +109,7 @@ export function TrueSizeMap() {
             />
           )}
         </div>
-        <div className="w-80 bg-[#1e1e1e] border-l border-gray-700 p-4 overflow-y-auto">
+        <div className="w-full md:w-80 bg-[#1e1e1e] border border-gray-700 md:border-l md:border-t-0 rounded-lg md:rounded-none p-4 overflow-y-auto max-h-[65vh] md:max-h-none">
           <div className="space-y-4">
             <CountrySearch
               onSelectCountry={handleSelectCountry}
