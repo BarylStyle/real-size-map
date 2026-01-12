@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://barylstyle.github.io/real-size-map/sitemap.xml

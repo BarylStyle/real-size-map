@@ -44,7 +44,7 @@ export function CookieConsentBanner() {
                 {
                   title: 'Wykorzystanie plików cookie',
                   description:
-                    'Używamy plików cookie, aby zapewnić podstawowe funkcje witryny i poprawić Twoje doświadczenia online.',
+                    'Używamy plików cookie, aby zapewnić podstawowe funkcje witryny i poprawić Twoje doświadczenia online. Więcej informacji w <a href="#/privacy-policy" class="cc-link">Polityce Prywatności</a>.',
                 },
                 {
                   title: 'Niezbędne pliki cookie',
