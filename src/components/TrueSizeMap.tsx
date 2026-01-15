@@ -1,13 +1,14 @@
 import { useState } from 'react';
+import { Link } from 'react-router-dom';
+import { Info } from 'lucide-react';
 import { Map } from './Map';
 import { CountrySearch } from './CountrySearch';
 import { CountryList } from './CountryList';
-import { AboutSection } from './AboutSection';
 import { useCountryGeoJSON } from '../hooks/useCountryGeoJSON';
 import { countries, Country } from '../data/countries';
 import L from 'leaflet';
 
-// INTERFEJS UPROSZCZONY - usunięto pole 'scale'
+
 export interface SelectedCountry {
   code: string;
   name: string;
@@ -92,15 +93,24 @@ export function TrueSizeMap() {
   return (
     <div className="min-h-screen bg-[#121212] flex flex-col">
       <header className="bg-[#1e1e1e] shadow-sm border-b border-gray-700 flex-shrink-0">
-        <div className="px-4 py-3">
-          <h1 className="text-2xl md:text-3xl font-bold text-white">Rzeczywisty Rozmiar</h1>
-          <p className="text-sm md:text-base text-gray-400 mt-1">Porównaj rzeczywiste rozmiary krajów, przeciągając je po mapie</p>
+        <div className="px-4 py-3 flex items-center justify-between">
+          <div>
+            <h1 className="text-2xl md:text-3xl font-bold text-blue-300">Rzeczywisty Rozmiar</h1>
+            <p className="text-sm md:text-base text-blue-200 mt-1">Porównaj rzeczywiste rozmiary krajów, przeciągając je po mapie</p>
+          </div>
+          <Link
+            to="/about"
+            className="flex items-center gap-2 px-4 py-2 bg-blue-600 hover:bg-blue-700 text-white rounded-lg transition-colors"
+          >
+            <Info className="w-5 h-5" />
+            <span className="hidden md:inline">O projekcie</span>
+          </Link>
         </div>
       </header>
       <div className="flex-1 flex flex-col md:flex-row min-h-0 gap-4 md:gap-0 p-4 md:p-0">
         <div className="flex-1 relative h-[60vh] md:h-auto md:min-h-0">
           {geoData && (
-            // PRZEKAZUJEMY NOWY PROP - scaleMultiplier
+            
             <Map
               selectedCountries={selectedCountries}
               onCountryClick={handleCountryClick}
@@ -138,7 +148,6 @@ export function TrueSizeMap() {
           </div>
         </div>
       </div>
-      <AboutSection />
     </div>
   );
 }

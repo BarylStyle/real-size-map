@@ -36,7 +36,7 @@ export function CountrySearch({ onSelectCountry, selectedCountries }: CountrySea
           }}
           onFocus={() => setIsOpen(true)}
           placeholder="Wyszukaj państwo..."
-          className="w-full pl-10 pr-10 py-3 border border-gray-600 rounded-lg bg-[#2a2a2a] text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+          className="w-full pl-10 pr-10 py-3 border border-blue-900 rounded-lg bg-[#2a2a2a] text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
         />
         {search && (
           <button
