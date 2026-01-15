@@ -22,7 +22,7 @@ export function PrivacyPolicy() {
             <p>
               Niniejsza Polityka Prywatności określa zasady przetwarzania i ochrony danych osobowych 
               przekazanych przez Użytkowników w związku z korzystaniem ze strony internetowej 
-              Rzeczywisty Rozmiar dostępnej pod adresem https://barylstyle.github.io/real-size-map/.
+              Rzeczywisty Rozmiar dostępnej pod adresem https://www.rzeczywistyrozmiar.pl.
             </p>
           </section>
 

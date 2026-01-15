@@ -2,6 +2,7 @@ import { useState } from 'react';
 import { Map } from './Map';
 import { CountrySearch } from './CountrySearch';
 import { CountryList } from './CountryList';
+import { AboutSection } from './AboutSection';
 import { useCountryGeoJSON } from '../hooks/useCountryGeoJSON';
 import { countries, Country } from '../data/countries';
 import L from 'leaflet';
@@ -137,6 +138,7 @@ export function TrueSizeMap() {
           </div>
         </div>
       </div>
+      <AboutSection />
     </div>
   );
 }
