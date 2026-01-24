@@ -98,7 +98,7 @@ export function TrueSizeMap() {
         </div>
       </header>
       <div className="flex-1 flex flex-col md:flex-row min-h-0 gap-4 md:gap-0 p-4 md:p-0">
-        <div className="flex-1 relative h-screen md:h-auto md:min-h-0">
+        <div className="flex-1 relative h-[60vh] md:h-auto md:min-h-0">
           {geoData && (
             
             <Map
