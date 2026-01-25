@@ -81,14 +81,6 @@ export function TrueSizeMap() {
     setSelectedCountries(selectedCountries.filter(c => c.code !== code));
   };
 
-  if (loading) {
-    return (
-      <div className="min-h-screen bg-gray-100 flex items-center justify-center">
-        <div className="text-xl text-gray-600">Ładowanie danych mapy...</div>
-      </div>
-    );
-  }
-
   return (
     <div className="min-h-screen bg-[#121212] flex flex-col">
       <header className="bg-[#1e1e1e] shadow-sm border-b border-gray-700 flex-shrink-0">
@@ -108,6 +100,16 @@ export function TrueSizeMap() {
               geoData={geoData}
               scaleMultiplier={scaleMultiplier} 
             />
+          )}
+          {!geoData && (
+            <div className="w-full h-full flex items-center justify-center bg-[#0a0a0a]">
+              <div className="text-center">
+                <div className="animate-pulse">
+                  <div className="w-12 h-12 bg-blue-500 rounded-full mx-auto mb-4"></div>
+                  <p className="text-gray-400">Ładowanie...</p>
+                </div>
+              </div>
+            </div>
           )}
         </div>
         <div className="w-full md:w-80 bg-[#1e1e1e] border border-gray-700 md:border-l md:border-t-0 rounded-lg md:rounded-none p-4 overflow-y-auto max-h-[65vh] md:max-h-none">
