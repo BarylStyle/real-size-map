@@ -92,7 +92,6 @@ export function TrueSizeMap() {
       <div className="flex-1 flex flex-col md:flex-row min-h-0 gap-4 md:gap-0 p-4 md:p-0">
         <div className="flex-1 relative h-[60vh] md:h-auto md:min-h-0">
           {geoData && (
-            
             <Map
               selectedCountries={selectedCountries}
               onCountryClick={handleCountryClick}
@@ -100,16 +99,6 @@ export function TrueSizeMap() {
               geoData={geoData}
               scaleMultiplier={scaleMultiplier} 
             />
-          )}
-          {!geoData && (
-            <div className="w-full h-full flex items-center justify-center bg-[#0a0a0a]">
-              <div className="text-center">
-                <div className="animate-pulse">
-                  <div className="w-12 h-12 bg-blue-500 rounded-full mx-auto mb-4"></div>
-                  <p className="text-gray-400">Ładowanie...</p>
-                </div>
-              </div>
-            </div>
           )}
         </div>
         <div className="w-full md:w-80 bg-[#1e1e1e] border border-gray-700 md:border-l md:border-t-0 rounded-lg md:rounded-none p-4 overflow-y-auto max-h-[65vh] md:max-h-none">

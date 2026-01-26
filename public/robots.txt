@@ -1,4 +1,7 @@
+User-agent: Googlebot
+Disallow:
+
 User-agent: *
 Allow: /
 
-Sitemap: https://barylstyle.github.io/real-size-map/sitemap.xml
+Sitemap: https://rzeczywistyrozmiar.pl/sitemap.xml
