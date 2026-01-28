@@ -298,6 +298,71 @@ export function TrueSizeMap() {
             </ul>
           </section>
 
+          {/* Sekcja: FAQ */}
+          <section className="space-y-4">
+            <h2 className="text-3xl font-semibold mb-6">❓ Często Zadawane Pytania (FAQ)</h2>
+            <div className="space-y-4">
+              <div className="bg-[#2a2a2a] p-4 rounded-lg">
+                <h3 className="text-lg font-semibold text-blue-400 mb-2">
+                  1. Czy Grenlandia naprawdę jest mniejsza od Afryki?
+                </h3>
+                <p className="text-gray-300">
+                  Tak! Afryka ma około 11,7 miliona km², a Grenlandia tylko 2,1 miliona km². 
+                  W projekcji Merkatora Grenlandia wygląda na porównywalną wielkością, ale w rzeczywistości 
+                  jest 5,5 razy mniejsza! To jeden z najbardziej szokujących przykładów zniekształceń.
+                </p>
+              </div>
+              <div className="bg-[#2a2a2a] p-4 rounded-lg">
+                <h3 className="text-lg font-semibold text-green-400 mb-2">
+                  2. Jakie projekcje map są dokładniejsze niż Mercator?
+                </h3>
+                <p className="text-gray-300">
+                  Istnieje kilka alternatyw: projekcja Mollweide (zachowuje proporcje), Sinusoidalna 
+                  (równopowierzchniowa), czy Gall-Peters (celowo powiększa Afrykę i Amerykę Południową). 
+                  Żadna projekcja nie jest idealna - każda coś zniekształca.
+                </p>
+              </div>
+              <div className="bg-[#2a2a2a] p-4 rounded-lg">
+                <h3 className="text-lg font-semibold text-purple-400 mb-2">
+                  3. Dlaczego więc używamy projekcji Merkatora?
+                </h3>
+                <p className="text-gray-300">
+                  Ponieważ zachowuje kąty prostych tras (kompasy wskazują prawidłowe kierunki). 
+                  Dla nawigacji morskiej czy lotniczej to bezcenne. Google Maps też jej używa, 
+                  mimo zniekształceń, bo jest wygodna i intuicyjna dla użytkowników.
+                </p>
+              </div>
+              <div className="bg-[#2a2a2a] p-4 rounded-lg">
+                <h3 className="text-lg font-semibold text-orange-400 mb-2">
+                  4. Jak ta aplikacja oblicza rzeczywiste rozmiary?
+                </h3>
+                <p className="text-gray-300">
+                  Aplikacja używa współrzędnych geograficznych (szerokość i długość) z bazy danych GeoJSON. 
+                  Wyświetla kraje w ich rzeczywistych proporcjach oraz pokazuje, jak byłyby zniekształcone 
+                  na mapie Mercatora w różnych szerokościach geograficznych.
+                </p>
+              </div>
+              <div className="bg-[#2a2a2a] p-4 rounded-lg">
+                <h3 className="text-lg font-semibold text-red-400 mb-2">
+                  5. Czy te dane są dokładne?
+                </h3>
+                <p className="text-gray-300">
+                  Tak! Dane pochodzą z bazy danych Natural Earth, która zawiera dokładne granice polityczne 
+                  i współrzędne geograficzne. Wszystkie obliczenia opierają się na matematyce projekcji kartograficznych.
+                </p>
+              </div>
+              <div className="bg-[#2a2a2a] p-4 rounded-lg">
+                <h3 className="text-lg font-semibold text-indigo-400 mb-2">
+                  6. Czy mogę użyć tego do edukacji?
+                </h3>
+                <p className="text-gray-300">
+                  Oczywiście! Ta aplikacja jest znakomita do nauczania geografii, kartografii i matematyki. 
+                  Pokazuje uczniom rzeczywiste rozmiary krajów i pomaga zrozumieć, jak mapy mogą zniekształcać rzeczywistość.
+                </p>
+              </div>
+            </div>
+          </section>
+
           {/* Footer info */}
           <div className="text-center text-gray-400 text-sm pt-8 border-t border-gray-700">
             <p>
@@ -308,6 +373,27 @@ export function TrueSizeMap() {
           </div>
         </div>
       </div>
+
+      {/* Footer */}
+      <footer className="bg-[#0a0a0a] border-t border-gray-700 py-8">
+        <div className="max-w-4xl mx-auto px-4 text-center text-gray-400 text-sm space-y-4">
+          <div className="flex flex-wrap justify-center gap-6">
+            <a href="/#/privacy-policy" className="text-blue-400 hover:text-blue-300 transition-colors">
+              Polityka Prywatności
+            </a>
+            <a href="https://github.com/BarylStyle/real-size-map" target="_blank" rel="noopener noreferrer" className="text-blue-400 hover:text-blue-300 transition-colors">
+              GitHub
+            </a>
+            <a href="mailto:contact@rzeczywistyrozmiar.pl" className="text-blue-400 hover:text-blue-300 transition-colors">
+              Kontakt
+            </a>
+          </div>
+          <div className="pt-4 border-t border-gray-700">
+            <p>&copy; 2026 Rzeczywisty Rozmiar. Wszystkie prawa zastrzeżone.</p>
+            <p className="mt-2">Projekt edukacyjny o kartografii i projekcjach map świata</p>
+          </div>
+        </div>
+      </footer>
     </div>
   );
 }
