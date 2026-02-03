@@ -1,15 +1,27 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
-    <loc>https://barylstyle.github.io/real-size-map/</loc>
-    <lastmod>2026-01-12</lastmod>
+    <loc>https://rzeczywistyrozmiar.pl/</loc>
+    <lastmod>2026-02-03</lastmod>
     <changefreq>weekly</changefreq>
     <priority>1.0</priority>
   </url>
   <url>
-    <loc>https://barylstyle.github.io/real-size-map/privacy-policy</loc>
-    <lastmod>2026-01-12</lastmod>
+    <loc>https://rzeczywistyrozmiar.pl/privacy-policy</loc>
+    <lastmod>2026-02-03</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.5</priority>
+  </url>
+  <url>
+    <loc>https://rzeczywistyrozmiar.pl/terms</loc>
+    <lastmod>2026-02-03</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.5</priority>
+  </url>
+  <url>
+    <loc>https://rzeczywistyrozmiar.pl/about</loc>
+    <lastmod>2026-02-03</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
   </url>
 </urlset>

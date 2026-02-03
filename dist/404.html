@@ -57,7 +57,17 @@
     <h1>404</h1>
     <h2>Strona nie znaleziona</h2>
     <p>Przykro nam, ale strona której szukasz nie istnieje lub została przeniesiona.</p>
-    <a href="/real-size-map/">Wróć do strony głównej</a>
+    <a href="/">Wróć do strony głównej</a>
   </div>
+
+  <script>
+    (function () {
+      var path = window.location.pathname + window.location.search;
+      var hash = window.location.hash;
+      if (!hash || hash === '#/' || hash === '#') {
+        window.location.replace('/?p=' + encodeURIComponent(path));
+      }
+    })();
+  </script>
 </body>
 </html>

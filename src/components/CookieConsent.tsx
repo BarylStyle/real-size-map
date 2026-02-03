@@ -29,7 +29,7 @@ export function CookieConsentBanner() {
             consentModal: {
               title: 'Używamy plików cookie',
               description:
-                'Ta strona wykorzystuje pliki cookie, aby zapewnić najlepszą jakość korzystania z naszej witryny. Pliki cookie analityczne pomagają nam zrozumieć, jak odwiedzający korzystają ze strony. <a href="#/privacy-policy" class="cc-link">Zobacz Politykę Prywatności</a>',
+                'Ta strona wykorzystuje pliki cookie, aby zapewnić najlepszą jakość korzystania z naszej witryny. Pliki cookie analityczne pomagają nam zrozumieć, jak odwiedzający korzystają ze strony. <a href="/privacy-policy" class="cc-link">Zobacz Politykę Prywatności</a>',
               acceptAllBtn: 'Akceptuj wszystkie',
               acceptNecessaryBtn: 'Tylko niezbędne',
               showPreferencesBtn: 'Zarządzaj preferencjami',
@@ -44,7 +44,7 @@ export function CookieConsentBanner() {
                 {
                   title: 'Wykorzystanie plików cookie',
                   description:
-                    'Używamy plików cookie, aby zapewnić podstawowe funkcje witryny i poprawić Twoje doświadczenia online. Więcej informacji w <a href="#/privacy-policy" class="cc-link">Polityce Prywatności</a>.',
+                    'Używamy plików cookie, aby zapewnić podstawowe funkcje witryny i poprawić Twoje doświadczenia online. Więcej informacji w <a href="/privacy-policy" class="cc-link">Polityce Prywatności</a>.',
                 },
                 {
                   title: 'Niezbędne pliki cookie',

@@ -26,7 +26,7 @@ const COLORS = [
 export function TrueSizeMap() {
   const [selectedCountries, setSelectedCountries] = useState<SelectedCountry[]>([]);
   const [scaleMultiplier, setScaleMultiplier] = useState<number>(1);
-  const { geoData, loading } = useCountryGeoJSON();
+  const { geoData } = useCountryGeoJSON();
 
   const handleSelectCountry = (country: Country) => {
     if (selectedCountries.some(c => c.code === country.code)) return;
@@ -89,46 +89,6 @@ export function TrueSizeMap() {
           <p className="text-sm md:text-base text-blue-200 mt-1">Porównaj rzeczywiste rozmiary krajów, przeciągając je po mapie</p>
         </div>
       </header>
-      <div className="flex-1 flex flex-col md:flex-row min-h-0 gap-4 md:gap-0 p-4 md:p-0">
-        <div className="flex-1 relative h-[60vh] md:h-auto md:min-h-0">
-          {geoData && (
-            <Map
-              selectedCountries={selectedCountries}
-              onCountryClick={handleCountryClick}
-              onCountryMove={handleCountryMove}
-              geoData={geoData}
-              scaleMultiplier={scaleMultiplier} 
-            />
-          )}
-        </div>
-        <div className="w-full md:w-80 bg-[#1e1e1e] border border-gray-700 md:border-l md:border-t-0 rounded-lg md:rounded-none p-4 overflow-y-auto max-h-[65vh] md:max-h-none">
-          <div className="space-y-4">
-            <CountrySearch
-              onSelectCountry={handleSelectCountry}
-              selectedCountries={selectedCountries.map(c => c.code)}
-            />
-            <div className="bg-[#2a2a2a] border border-blue-900 rounded-lg p-4">
-              <h3 className="font-semibold text-blue-300 mb-2">Jak korzystać</h3>
-              <ul className="text-sm text-blue-200 space-y-1">
-                <li>• Wyszukaj kraje powyżej</li>
-                <li>• Kliknij kraje na mapie</li>
-                <li>• Przeciągnij kraje, aby porównać rozmiary</li>
-              </ul>
-              <div className="mt-4">
-                <label className="block text-sm font-medium text-blue-300 mb-1">Mnożnik skali</label>
-                <input
-                  type="range" min={0.5} max={2} step={0.05}
-                  value={scaleMultiplier}
-                  onChange={(e) => setScaleMultiplier(parseFloat(e.target.value))}
-                  className="w-full"
-                />
-                <div className="text-xs text-blue-300 mt-1">Obecna: x{scaleMultiplier.toFixed(2)}</div>
-              </div>
-            </div>
-            <CountryList countries={selectedCountries} onRemove={handleRemoveCountry} />
-          </div>
-        </div>
-      </div>
       
       {/* About Section */}
       <div className="bg-[#1e1e1e] text-white p-8 md:p-12">
@@ -374,18 +334,62 @@ export function TrueSizeMap() {
         </div>
       </div>
 
+      <div className="flex-1 flex flex-col md:flex-row min-h-0 gap-4 md:gap-0 p-4 md:p-0">
+        <div className="flex-1 relative h-[60vh] md:h-auto md:min-h-0">
+          {geoData && (
+            <Map
+              selectedCountries={selectedCountries}
+              onCountryClick={handleCountryClick}
+              onCountryMove={handleCountryMove}
+              geoData={geoData}
+              scaleMultiplier={scaleMultiplier} 
+            />
+          )}
+        </div>
+        <div className="w-full md:w-80 bg-[#1e1e1e] border border-gray-700 md:border-l md:border-t-0 rounded-lg md:rounded-none p-4 overflow-y-auto max-h-[65vh] md:max-h-none">
+          <div className="space-y-4">
+            <CountrySearch
+              onSelectCountry={handleSelectCountry}
+              selectedCountries={selectedCountries.map(c => c.code)}
+            />
+            <div className="bg-[#2a2a2a] border border-blue-900 rounded-lg p-4">
+              <h3 className="font-semibold text-blue-300 mb-2">Jak korzystać</h3>
+              <ul className="text-sm text-blue-200 space-y-1">
+                <li>• Wyszukaj kraje powyżej</li>
+                <li>• Kliknij kraje na mapie</li>
+                <li>• Przeciągnij kraje, aby porównać rozmiary</li>
+              </ul>
+              <div className="mt-4">
+                <label className="block text-sm font-medium text-blue-300 mb-1">Mnożnik skali</label>
+                <input
+                  type="range" min={0.5} max={2} step={0.05}
+                  value={scaleMultiplier}
+                  onChange={(e) => setScaleMultiplier(parseFloat(e.target.value))}
+                  className="w-full"
+                />
+                <div className="text-xs text-blue-300 mt-1">Obecna: x{scaleMultiplier.toFixed(2)}</div>
+              </div>
+            </div>
+            <CountryList countries={selectedCountries} onRemove={handleRemoveCountry} />
+          </div>
+        </div>
+      </div>
+
       {/* Footer */}
       <footer className="bg-[#0a0a0a] border-t border-gray-700 py-8">
         <div className="max-w-4xl mx-auto px-4 text-center text-gray-400 text-sm space-y-4">
           <div className="flex flex-wrap justify-center gap-6">
-            <a href="/#/privacy-policy" className="text-blue-400 hover:text-blue-300 transition-colors">
+            <a href="/privacy-policy" className="text-blue-400 hover:text-blue-300 transition-colors">
               Polityka Prywatności
+            </a>
+            <a href="/terms" className="text-blue-400 hover:text-blue-300 transition-colors">
+              Regulamin
             </a>
             <a href="https://github.com/BarylStyle/real-size-map" target="_blank" rel="noopener noreferrer" className="text-blue-400 hover:text-blue-300 transition-colors">
               GitHub
             </a>
-            <a href="mailto:contact@rzeczywistyrozmiar.pl" className="text-blue-400 hover:text-blue-300 transition-colors">
-              Kontakt
+            <a href="/about" className="text-blue-400 hover:text-blue-300 transition-colors">
+              O mnie
             </a>
           </div>
           <div className="pt-4 border-t border-gray-700">
