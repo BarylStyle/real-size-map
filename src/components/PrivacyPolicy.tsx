@@ -1,17 +1,9 @@
-import { Link } from 'react-router-dom';
-import { ArrowLeft } from 'lucide-react';
+import { Navbar } from './Navbar';
 
 export function PrivacyPolicy() {
   return (
-    <div className="min-h-screen bg-[#121212] text-white">
-      <header className="bg-[#1e1e1e] border-b border-gray-700">
-        <div className="max-w-4xl mx-auto px-4 py-4">
-          <Link to="/" className="inline-flex items-center text-blue-400 hover:text-blue-300 transition-colors">
-            <ArrowLeft className="w-4 h-4 mr-2" />
-            Powrót do mapy
-          </Link>
-        </div>
-      </header>
+    <div className="min-h-screen bg-[#121212] text-white flex flex-col">
+      <Navbar />
 
       <main className="max-w-4xl mx-auto px-4 py-8">
         <h1 className="text-4xl font-bold mb-8">Polityka Prywatności</h1>

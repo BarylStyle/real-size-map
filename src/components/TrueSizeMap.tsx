@@ -3,6 +3,7 @@ import { MapPin, Globe, Move } from 'lucide-react';
 import { Map } from './Map';
 import { CountrySearch } from './CountrySearch';
 import { CountryList } from './CountryList';
+import { Navbar } from './Navbar';
 import { useCountryGeoJSON } from '../hooks/useCountryGeoJSON';
 import { countries, Country } from '../data/countries';
 import L from 'leaflet';
@@ -83,12 +84,7 @@ export function TrueSizeMap() {
 
   return (
     <div className="min-h-screen bg-[#121212] flex flex-col">
-      <header className="bg-[#1e1e1e] shadow-sm border-b border-gray-700 flex-shrink-0">
-        <div className="px-4 py-3">
-          <h1 className="text-2xl md:text-3xl font-bold text-blue-300">Rzeczywisty Rozmiar</h1>
-          <p className="text-sm md:text-base text-blue-200 mt-1">Porównaj rzeczywiste rozmiary krajów, przeciągając je po mapie</p>
-        </div>
-      </header>
+      <Navbar />
       
       {/* About Section */}
       <div className="bg-[#1e1e1e] text-white p-8 md:p-12">
@@ -379,6 +375,9 @@ export function TrueSizeMap() {
       <footer className="bg-[#0a0a0a] border-t border-gray-700 py-8">
         <div className="max-w-4xl mx-auto px-4 text-center text-gray-400 text-sm space-y-4">
           <div className="flex flex-wrap justify-center gap-6">
+            <a href="/artykuly" className="text-blue-400 hover:text-blue-300 transition-colors font-medium">
+              Artykuły o kartografii
+            </a>
             <a href="/privacy-policy" className="text-blue-400 hover:text-blue-300 transition-colors">
               Polityka Prywatności
             </a>

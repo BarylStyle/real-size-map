@@ -6,9 +6,35 @@
   "scripts": {
     "dev": "vite",
     "build": "vite build",
+    "postbuild": "react-snap",
     "lint": "eslint .",
     "preview": "vite preview",
     "typecheck": "tsc --noEmit -p tsconfig.app.json"
+  },
+  "reactSnap": {
+    "source": "dist",
+    "minifyHtml": {
+      "collapseWhitespace": false,
+      "removeComments": false
+    },
+    "puppeteerArgs": [
+      "--no-sandbox",
+      "--disable-setuid-sandbox"
+    ],
+    "crawl": true,
+    "saveAs": "html",
+    "include": [
+      "/",
+      "/artykuly",
+      "/artykuly/projekcja-merkatora",
+      "/artykuly/afryka-vs-grenlandia",
+      "/artykuly/najwieksze-kraje-swiata",
+      "/artykuly/rodzaje-projekcji",
+      "/artykuly/polska-na-mapie",
+      "/about",
+      "/privacy-policy",
+      "/terms"
+    ]
   },
   "dependencies": {
     "@supabase/supabase-js": "^2.57.4",
@@ -18,6 +44,7 @@
     "lucide-react": "^0.344.0",
     "react": "^18.3.1",
     "react-dom": "^18.3.1",
+    "react-helmet-async": "^3.0.0",
     "react-leaflet": "^4.2.1",
     "react-router-dom": "^7.12.0",
     "vanilla-cookieconsent": "^3.1.0",
@@ -25,6 +52,7 @@
   },
   "devDependencies": {
     "@eslint/js": "^9.9.1",
+    "@tailwindcss/typography": "^0.5.19",
     "@types/react": "^18.3.5",
     "@types/react-dom": "^18.3.0",
     "@vitejs/plugin-react": "^4.3.1",
@@ -34,6 +62,7 @@
     "eslint-plugin-react-refresh": "^0.4.11",
     "globals": "^15.9.0",
     "postcss": "^8.4.35",
+    "react-snap": "^1.23.0",
     "tailwindcss": "^3.4.1",
     "typescript": "^5.5.3",
     "typescript-eslint": "^8.3.0"

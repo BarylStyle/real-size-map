@@ -1,9 +1,12 @@
+import { Navbar } from './Navbar';
+
 export function TermsOfService() {
   return (
-    <div className="min-h-screen bg-gradient-to-br from-gray-900 via-blue-900 to-purple-900 text-white p-8">
-      <div className="max-w-4xl mx-auto">
-        <div className="bg-[#1a1a1a]/80 backdrop-blur-sm rounded-lg shadow-xl p-8 border border-gray-700">
-          <h1 className="text-4xl font-bold mb-8 text-center bg-gradient-to-r from-blue-400 to-purple-400 bg-clip-text text-transparent">
+    <div className="min-h-screen bg-[#121212] text-white flex flex-col">
+      <Navbar />
+      <div className="max-w-4xl mx-auto w-full px-4 py-10 flex-1">
+        <div className="bg-[#1e1e1e] rounded-lg border border-gray-700 p-8">
+          <h1 className="text-4xl font-bold mb-8 text-blue-300">
             Regulamin Serwisu
           </h1>
 
@@ -132,14 +135,6 @@ export function TermsOfService() {
             </p>
           </div>
 
-          <div className="mt-8 text-center">
-            <a 
-              href="/" 
-              className="inline-block bg-blue-600 hover:bg-blue-700 text-white font-semibold py-3 px-6 rounded-lg transition-colors"
-            >
-              ← Powrót do mapy
-            </a>
-          </div>
         </div>
       </div>
     </div>
