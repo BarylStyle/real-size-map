@@ -1,4 +1,5 @@
 import { Navbar } from './Navbar';
+import { Footer } from './Footer';
 
 export function PrivacyPolicy() {
   return (
@@ -40,11 +41,11 @@ export function PrivacyPolicy() {
           <section>
             <h2 className="text-2xl font-semibold text-white mb-3">4. Google Analytics</h2>
             <p className="mb-3">
-              Strona wykorzystuje Google Analytics – usługę analizy ruchu dostarczaną przez Google LLC. 
+              Strona wykorzystuje Google Analytics – usługę analizy ruchu dostarczaną przez Google LLC.
               Google Analytics używa plików cookies do analizy sposobu korzystania ze Strony przez Użytkowników.
             </p>
             <p className="mb-3">
-              Informacje generowane przez cookies dotyczące korzystania ze Strony (włączając adres IP) 
+              Informacje generowane przez cookies dotyczące korzystania ze Strony (włączając adres IP)
               są przekazywane do Google i przechowywane na serwerach w Stanach Zjednoczonych.
             </p>
             <p className="mb-3">Dane zbierane przez Google Analytics:</p>
@@ -61,7 +62,50 @@ export function PrivacyPolicy() {
           </section>
 
           <section>
-            <h2 className="text-2xl font-semibold text-white mb-3">5. Prawa użytkownika</h2>
+            <h2 className="text-2xl font-semibold text-white mb-3">5. Google AdSense — reklamy</h2>
+            <p className="mb-3">
+              Strona korzysta z usługi Google AdSense dostarczanej przez Google LLC (1600 Amphitheatre Parkway,
+              Mountain View, CA 94043, USA) w celu wyświetlania reklam. Google AdSense używa plików cookies
+              oraz podobnych technologii śledzących, aby wyświetlać reklamy dopasowane do zainteresowań
+              Użytkownika.
+            </p>
+            <p className="mb-3">Google AdSense może:</p>
+            <ul className="list-disc list-inside space-y-2 ml-4">
+              <li>Używać plików cookie do zapamiętania poprzednich wizyt na tej i innych stronach</li>
+              <li>Wyświetlać reklamy na podstawie wcześniejszych odwiedzin witryn w sieci Google</li>
+              <li>Ograniczać liczbę wyświetleń tej samej reklamy</li>
+              <li>Mierzyć skuteczność kampanii reklamowych</li>
+            </ul>
+            <p className="mt-3 mb-3">
+              Użytkownik może zrezygnować z personalizowanych reklam Google, odwiedzając stronę:{' '}
+              <a
+                href="https://www.google.com/settings/ads"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="text-blue-400 hover:text-blue-300 underline"
+              >
+                google.com/settings/ads
+              </a>
+              . Więcej informacji o polityce prywatności Google:{' '}
+              <a
+                href="https://policies.google.com/privacy"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="text-blue-400 hover:text-blue-300 underline"
+              >
+                policies.google.com/privacy
+              </a>
+              .
+            </p>
+            <p>
+              Reklamy personalizowane wyświetlane są tylko po wyrażeniu zgody na pliki cookie reklamowe
+              w bannerze cookie. Bez zgody wyświetlane są wyłącznie reklamy kontekstowe, nieoparte
+              na historii przeglądania.
+            </p>
+          </section>
+
+          <section>
+            <h2 className="text-2xl font-semibold text-white mb-3">6. Prawa użytkownika</h2>
             <p className="mb-3">Użytkownik ma prawo do:</p>
             <ul className="list-disc list-inside space-y-2 ml-4">
               <li>Wycofania zgody na przetwarzanie danych osobowych w dowolnym momencie</li>
@@ -73,7 +117,7 @@ export function PrivacyPolicy() {
           </section>
 
           <section>
-            <h2 className="text-2xl font-semibold text-white mb-3">6. Zarządzanie cookies</h2>
+            <h2 className="text-2xl font-semibold text-white mb-3">7. Zarządzanie cookies</h2>
             <p className="mb-3">
               Użytkownik może w każdej chwili zmienić ustawienia dotyczące plików cookies:
             </p>
@@ -93,7 +137,7 @@ export function PrivacyPolicy() {
           </section>
 
           <section>
-            <h2 className="text-2xl font-semibold text-white mb-3">7. Bezpieczeństwo danych</h2>
+            <h2 className="text-2xl font-semibold text-white mb-3">8. Bezpieczeństwo danych</h2>
             <p>
               Strona korzysta z protokołu HTTPS, co zapewnia szyfrowanie danych przesyłanych między 
               przeglądarką Użytkownika a serwerem. Administrator stosuje odpowiednie środki techniczne 
@@ -102,7 +146,7 @@ export function PrivacyPolicy() {
           </section>
 
           <section>
-            <h2 className="text-2xl font-semibold text-white mb-3">8. Zmiany w polityce prywatności</h2>
+            <h2 className="text-2xl font-semibold text-white mb-3">9. Zmiany w polityce prywatności</h2>
             <p>
               Administrator zastrzega sobie prawo do wprowadzania zmian w Polityce Prywatności. 
               O wszelkich zmianach Użytkownicy zostaną poinformowani poprzez komunikat na Stronie.
@@ -110,7 +154,7 @@ export function PrivacyPolicy() {
           </section>
 
           <section>
-            <h2 className="text-2xl font-semibold text-white mb-3">9. Kontakt</h2>
+            <h2 className="text-2xl font-semibold text-white mb-3">10. Kontakt</h2>
             <p>
               W razie pytań dotyczących Polityki Prywatności prosimy o kontakt przez GitHub: 
               <a href="https://github.com/BarylStyle" className="text-blue-400 hover:text-blue-300 ml-1">
@@ -120,10 +164,11 @@ export function PrivacyPolicy() {
           </section>
 
           <p className="text-sm text-gray-400 mt-8 pt-4 border-t border-gray-700">
-            Data ostatniej aktualizacji: 12 stycznia 2026
+            Data ostatniej aktualizacji: 28 kwietnia 2026
           </p>
         </div>
       </main>
+      <Footer />
     </div>
   );
 }

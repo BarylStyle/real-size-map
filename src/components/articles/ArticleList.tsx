@@ -1,6 +1,7 @@
 import { Link } from 'react-router-dom';
 import { Helmet } from 'react-helmet-async';
 import { Navbar } from '../Navbar';
+import { Footer } from '../Footer';
 
 const articles = [
   {
@@ -37,6 +38,76 @@ const articles = [
     description: 'Polska ma 312 679 km² — sprawdź, jak wypada na tle innych krajów świata i jak bardzo projekcja Merkatora zmienia nasze postrzeganie kraju.',
     date: '2026-03-03',
     readingTime: '5 min czytania',
+  },
+  {
+    slug: 'australia-porownanie',
+    title: 'Jak wielka jest Australia? Porównanie z Europą, Azją i Afryką',
+    description: 'Australia jest 6. największym krajem świata — większym niż cała Europa Zachodnia. Sprawdź, co mieści się w jej granicach i dlaczego wygląda mniejsza na mapach.',
+    date: '2026-03-10',
+    readingTime: '8 min czytania',
+  },
+  {
+    slug: 'rosja-na-mapach',
+    title: 'Dlaczego Rosja wygląda tak ogromnie na mapach? Prawda o zniekształceniach',
+    description: 'Rosja jest największym krajem świata, ale na mapie Merkatora wygląda dwukrotnie większa niż jest. Sprawdź jak to możliwe i jak naprawdę wygląda vs Afryka.',
+    date: '2026-03-17',
+    readingTime: '7 min czytania',
+  },
+  {
+    slug: 'ameryka-poludniowa',
+    title: 'Ameryka Południowa — dlaczego jest tak niedoceniana na mapach?',
+    description: 'Ameryka Południowa jest prawie 4 razy większa od Europy — ale na mapie Merkatora wygląda skromnie. Odkryj prawdziwe rozmiary Brazylii i całego kontynentu.',
+    date: '2026-03-24',
+    readingTime: '8 min czytania',
+  },
+  {
+    slug: 'mity-geograficzne',
+    title: 'Mity geograficzne, w które wszyscy wierzymy — obalamy je liczbami',
+    description: 'Grenlandia prawie jak Afryka? Rosja większa od Afryki? Skandynawia jak Indie? Sprawdzamy 10 popularnych mitów geograficznych i konfrontujemy je z faktami.',
+    date: '2026-03-31',
+    readingTime: '9 min czytania',
+  },
+  {
+    slug: 'google-maps-mercator',
+    title: 'Jak działa Google Maps i dlaczego używa projekcji Merkatora?',
+    description: 'Google Maps używa zmodyfikowanej projekcji Merkatora — z konkretnych powodów technicznych. Wyjaśniamy, jak działa system kafelków i co to oznacza dla obrazu świata.',
+    date: '2026-04-07',
+    readingTime: '7 min czytania',
+  },
+  {
+    slug: 'rozmiary-oceanow',
+    title: 'Rozmiary oceanów świata — Pacyfik, Atlantyk, Indyjski w liczbach',
+    description: 'Pacyfik jest większy niż wszystkie lądy razem wzięte. Sprawdź prawdziwe rozmiary oceanów i dowiedz się, jak mapy zniekształcają nasze postrzeganie mórz.',
+    date: '2026-04-10',
+    readingTime: '7 min czytania',
+  },
+  {
+    slug: 'najmniejsze-kraje',
+    title: 'Najmniejsze kraje świata — ile naprawdę zajmują miejsca?',
+    description: 'Watykan ma 0,44 km², Monako 2 km², San Marino 61 km². Sprawdź ranking najmniejszych krajów świata i odkryj, jak małe mogą być suwerenne państwa.',
+    date: '2026-04-14',
+    readingTime: '7 min czytania',
+  },
+  {
+    slug: 'indie-vs-europa',
+    title: 'Indie vs Europa — kto jest większy? Zaskakujące porównanie',
+    description: 'Na mapie Merkatora Europa wygląda ogromnie przy Indiach. Ale Indie są tylko 1,5 raza mniejsze od Europy. A Skandynawia? Indie są od niej 2,7 razy większe.',
+    date: '2026-04-17',
+    readingTime: '7 min czytania',
+  },
+  {
+    slug: 'afryka-kontynent',
+    title: 'Afryka — największy niedoceniany kontynent. Prawdziwy rozmiar i potencjał',
+    description: 'W Afryce zmieściłyby się USA, Chiny, Europa i Indie razem. Kontynent z 54 krajami i 1,4 mld ludzi jest systematycznie pomniejszany przez projekcję Merkatora.',
+    date: '2026-04-21',
+    readingTime: '9 min czytania',
+  },
+  {
+    slug: 'historia-kartografii',
+    title: 'Historia kartografii od starożytności do Google Maps',
+    description: 'Od glinianych tabliczek Mezopotamii po satelity GPS — 6000 lat historii map. Jak zmieniało się nasze rozumienie kształtu Ziemi i co mapy mówią o cywilizacjach.',
+    date: '2026-04-24',
+    readingTime: '10 min czytania',
   },
 ];
 
@@ -95,6 +166,7 @@ export function ArticleList() {
           </Link>
         </div>
       </div>
+      <Footer />
     </div>
   );
 }

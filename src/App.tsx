@@ -10,6 +10,16 @@ import { ArticleAfricaGreenland } from './components/articles/ArticleAfricaGreen
 import { ArticleBiggestCountries } from './components/articles/ArticleBiggestCountries';
 import { ArticleMapProjections } from './components/articles/ArticleMapProjections';
 import { ArticlePoland } from './components/articles/ArticlePoland';
+import { ArticleAustralia } from './components/articles/ArticleAustralia';
+import { ArticleRussia } from './components/articles/ArticleRussia';
+import { ArticleSouthAmerica } from './components/articles/ArticleSouthAmerica';
+import { ArticleGeographyMyths } from './components/articles/ArticleGeographyMyths';
+import { ArticleGoogleMaps } from './components/articles/ArticleGoogleMaps';
+import { ArticleOceans } from './components/articles/ArticleOceans';
+import { ArticleSmallestCountries } from './components/articles/ArticleSmallestCountries';
+import { ArticleIndiaEurope } from './components/articles/ArticleIndiaEurope';
+import { ArticleAfrica } from './components/articles/ArticleAfrica';
+import { ArticleCartographyHistory } from './components/articles/ArticleCartographyHistory';
 
 function App() {
   return (
@@ -25,6 +35,16 @@ function App() {
         <Route path="/artykuly/najwieksze-kraje-swiata" element={<ArticleBiggestCountries />} />
         <Route path="/artykuly/rodzaje-projekcji" element={<ArticleMapProjections />} />
         <Route path="/artykuly/polska-na-mapie" element={<ArticlePoland />} />
+        <Route path="/artykuly/australia-porownanie" element={<ArticleAustralia />} />
+        <Route path="/artykuly/rosja-na-mapach" element={<ArticleRussia />} />
+        <Route path="/artykuly/ameryka-poludniowa" element={<ArticleSouthAmerica />} />
+        <Route path="/artykuly/mity-geograficzne" element={<ArticleGeographyMyths />} />
+        <Route path="/artykuly/google-maps-mercator" element={<ArticleGoogleMaps />} />
+        <Route path="/artykuly/rozmiary-oceanow" element={<ArticleOceans />} />
+        <Route path="/artykuly/najmniejsze-kraje" element={<ArticleSmallestCountries />} />
+        <Route path="/artykuly/indie-vs-europa" element={<ArticleIndiaEurope />} />
+        <Route path="/artykuly/afryka-kontynent" element={<ArticleAfrica />} />
+        <Route path="/artykuly/historia-kartografii" element={<ArticleCartographyHistory />} />
       </Routes>
       <CookieConsentBanner />
     </>

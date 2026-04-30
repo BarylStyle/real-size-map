@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import { MapPin, Globe, Move } from 'lucide-react';
+import { Footer } from './Footer';
 import { Map } from './Map';
 import { CountrySearch } from './CountrySearch';
 import { CountryList } from './CountryList';
@@ -371,32 +372,7 @@ export function TrueSizeMap() {
         </div>
       </div>
 
-      {/* Footer */}
-      <footer className="bg-[#0a0a0a] border-t border-gray-700 py-8">
-        <div className="max-w-4xl mx-auto px-4 text-center text-gray-400 text-sm space-y-4">
-          <div className="flex flex-wrap justify-center gap-6">
-            <a href="/artykuly" className="text-blue-400 hover:text-blue-300 transition-colors font-medium">
-              Artykuły o kartografii
-            </a>
-            <a href="/privacy-policy" className="text-blue-400 hover:text-blue-300 transition-colors">
-              Polityka Prywatności
-            </a>
-            <a href="/terms" className="text-blue-400 hover:text-blue-300 transition-colors">
-              Regulamin
-            </a>
-            <a href="https://github.com/BarylStyle/real-size-map" target="_blank" rel="noopener noreferrer" className="text-blue-400 hover:text-blue-300 transition-colors">
-              GitHub
-            </a>
-            <a href="/about" className="text-blue-400 hover:text-blue-300 transition-colors">
-              O mnie
-            </a>
-          </div>
-          <div className="pt-4 border-t border-gray-700">
-            <p>&copy; 2026 Rzeczywisty Rozmiar. Wszystkie prawa zastrzeżone.</p>
-            <p className="mt-2">Projekt edukacyjny o kartografii i projekcjach map świata</p>
-          </div>
-        </div>
-      </footer>
+      <Footer />
     </div>
   );
 }

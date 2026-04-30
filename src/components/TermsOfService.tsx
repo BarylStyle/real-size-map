@@ -1,4 +1,5 @@
 import { Navbar } from './Navbar';
+import { Footer } from './Footer';
 
 export function TermsOfService() {
   return (
@@ -137,6 +138,7 @@ export function TermsOfService() {
 
         </div>
       </div>
+      <Footer />
     </div>
   );
 }

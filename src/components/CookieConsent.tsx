@@ -20,6 +20,9 @@ export function CookieConsentBanner() {
         analytics: {
           enabled: false,
         },
+        advertising: {
+          enabled: false,
+        },
       },
 
       language: {
@@ -29,7 +32,7 @@ export function CookieConsentBanner() {
             consentModal: {
               title: 'Używamy plików cookie',
               description:
-                'Ta strona wykorzystuje pliki cookie, aby zapewnić najlepszą jakość korzystania z naszej witryny. Pliki cookie analityczne pomagają nam zrozumieć, jak odwiedzający korzystają ze strony. <a href="/privacy-policy" class="cc-link">Zobacz Politykę Prywatności</a>',
+                'Ta strona wykorzystuje pliki cookie, aby zapewnić najlepszą jakość korzystania z naszej witryny. Używamy też ciasteczek analitycznych i reklamowych (Google AdSense). <a href="/privacy-policy" class="cc-link">Zobacz Politykę Prywatności</a>',
               acceptAllBtn: 'Akceptuj wszystkie',
               acceptNecessaryBtn: 'Tylko niezbędne',
               showPreferencesBtn: 'Zarządzaj preferencjami',
@@ -58,6 +61,12 @@ export function CookieConsentBanner() {
                     'Te pliki cookie pomagają nam zrozumieć, jak użytkownicy korzystają z naszej witryny, zbierając anonimowe dane. Wykorzystujemy Google Analytics.',
                   linkedCategory: 'analytics',
                 },
+                {
+                  title: 'Pliki cookie reklamowe',
+                  description:
+                    'Te pliki cookie są używane przez Google AdSense do wyświetlania reklam dopasowanych do Twoich zainteresowań. Pozwalają też ograniczyć liczbę wyświetleń tej samej reklamy i mierzyć skuteczność kampanii reklamowych.',
+                  linkedCategory: 'advertising',
+                },
               ],
             },
           },
@@ -83,6 +92,9 @@ export function CookieConsentBanner() {
         if (cookie.categories.includes('analytics')) {
           loadGoogleAnalytics();
         }
+        if (cookie.categories.includes('advertising')) {
+          enableAdSense();
+        }
       },
 
       onChange: ({ changedCategories, cookie }) => {
@@ -90,12 +102,20 @@ export function CookieConsentBanner() {
           if (cookie.categories.includes('analytics')) {
             loadGoogleAnalytics();
           } else {
-            // Disable GA if user revokes consent
             if (window.gtag) {
               window.gtag('consent', 'update', {
                 analytics_storage: 'denied',
               });
             }
+          }
+        }
+        if (changedCategories.includes('advertising')) {
+          if (window.gtag) {
+            window.gtag('consent', 'update', {
+              ad_storage: cookie.categories.includes('advertising') ? 'granted' : 'denied',
+              ad_user_data: cookie.categories.includes('advertising') ? 'granted' : 'denied',
+              ad_personalization: cookie.categories.includes('advertising') ? 'granted' : 'denied',
+            });
           }
         }
       },
@@ -106,18 +126,15 @@ export function CookieConsentBanner() {
 }
 
 function loadGoogleAnalytics() {
-  // Check if already loaded
   if (document.querySelector('script[src*="googletagmanager.com/gtag/js"]')) {
     return;
   }
 
-  // Load gtag.js
   const script = document.createElement('script');
   script.async = true;
   script.src = 'https://www.googletagmanager.com/gtag/js?id=G-QDF2K62D0D';
   document.head.appendChild(script);
 
-  // Initialize dataLayer
   window.dataLayer = window.dataLayer || [];
   window.gtag = function (...args: any[]) {
     window.dataLayer.push(args);
@@ -126,4 +143,14 @@ function loadGoogleAnalytics() {
   window.gtag('config', 'G-QDF2K62D0D', {
     anonymize_ip: true,
   });
+}
+
+function enableAdSense() {
+  if (window.gtag) {
+    window.gtag('consent', 'update', {
+      ad_storage: 'granted',
+      ad_user_data: 'granted',
+      ad_personalization: 'granted',
+    });
+  }
 }

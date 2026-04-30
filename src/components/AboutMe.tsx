@@ -1,4 +1,5 @@
 import { Navbar } from './Navbar';
+import { Footer } from './Footer';
 
 export function AboutMe() {
   return (
@@ -59,6 +60,7 @@ export function AboutMe() {
           </div>
         </div>
       </div>
+      <Footer />
     </div>
   );
 }

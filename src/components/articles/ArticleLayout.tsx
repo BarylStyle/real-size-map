@@ -1,5 +1,6 @@
 import { Link } from 'react-router-dom';
 import { Navbar } from '../Navbar';
+import { Footer } from '../Footer';
 
 interface ArticleLayoutProps {
   title: string;
@@ -57,6 +58,7 @@ export function ArticleLayout({ title, description, datePublished, readingTime, 
           </div>
         </footer>
       </article>
+      <Footer />
     </div>
   );
 }
