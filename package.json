@@ -10,35 +10,8 @@
     "preview": "vite preview",
     "typecheck": "tsc --noEmit -p tsconfig.app.json"
   },
-  "reactSnap": {
-    "source": "dist",
-    "minifyHtml": {
-      "collapseWhitespace": false,
-      "removeComments": false
-    },
-    "puppeteerArgs": [
-      "--no-sandbox",
-      "--disable-setuid-sandbox"
-    ],
-    "crawl": true,
-    "saveAs": "html",
-    "include": [
-      "/",
-      "/artykuly",
-      "/artykuly/projekcja-merkatora",
-      "/artykuly/afryka-vs-grenlandia",
-      "/artykuly/najwieksze-kraje-swiata",
-      "/artykuly/rodzaje-projekcji",
-      "/artykuly/polska-na-mapie",
-      "/about",
-      "/privacy-policy",
-      "/terms"
-    ]
-  },
   "dependencies": {
-    "@supabase/supabase-js": "^2.57.4",
     "@types/leaflet": "^1.9.21",
-    "geojson-bounds": "^1.0.4",
     "leaflet": "^1.9.4",
     "lucide-react": "^0.344.0",
     "react": "^18.3.1",
@@ -61,7 +34,6 @@
     "eslint-plugin-react-refresh": "^0.4.11",
     "globals": "^15.9.0",
     "postcss": "^8.4.35",
-    "react-snap": "^1.23.0",
     "tailwindcss": "^3.4.1",
     "typescript": "^5.5.3",
     "typescript-eslint": "^8.3.0"

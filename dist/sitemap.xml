@@ -2,13 +2,13 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
     <loc>https://rzeczywistyrozmiar.pl/</loc>
-    <lastmod>2026-04-20</lastmod>
+    <lastmod>2026-08-08</lastmod>
     <changefreq>weekly</changefreq>
     <priority>1.0</priority>
   </url>
   <url>
     <loc>https://rzeczywistyrozmiar.pl/artykuly</loc>
-    <lastmod>2026-04-20</lastmod>
+    <lastmod>2026-08-08</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.9</priority>
   </url>
@@ -43,6 +43,66 @@
     <priority>0.8</priority>
   </url>
   <url>
+    <loc>https://rzeczywistyrozmiar.pl/artykuly/australia-porownanie</loc>
+    <lastmod>2026-03-10</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://rzeczywistyrozmiar.pl/artykuly/rosja-na-mapach</loc>
+    <lastmod>2026-03-17</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://rzeczywistyrozmiar.pl/artykuly/ameryka-poludniowa</loc>
+    <lastmod>2026-03-24</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://rzeczywistyrozmiar.pl/artykuly/mity-geograficzne</loc>
+    <lastmod>2026-03-31</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://rzeczywistyrozmiar.pl/artykuly/google-maps-mercator</loc>
+    <lastmod>2026-04-07</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://rzeczywistyrozmiar.pl/artykuly/rozmiary-oceanow</loc>
+    <lastmod>2026-04-10</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://rzeczywistyrozmiar.pl/artykuly/najmniejsze-kraje</loc>
+    <lastmod>2026-04-14</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://rzeczywistyrozmiar.pl/artykuly/indie-vs-europa</loc>
+    <lastmod>2026-04-17</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://rzeczywistyrozmiar.pl/artykuly/afryka-kontynent</loc>
+    <lastmod>2026-04-21</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://rzeczywistyrozmiar.pl/artykuly/historia-kartografii</loc>
+    <lastmod>2026-04-24</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
     <loc>https://rzeczywistyrozmiar.pl/about</loc>
     <lastmod>2026-04-20</lastmod>
     <changefreq>monthly</changefreq>
@@ -50,7 +110,7 @@
   </url>
   <url>
     <loc>https://rzeczywistyrozmiar.pl/privacy-policy</loc>
-    <lastmod>2026-02-03</lastmod>
+    <lastmod>2026-04-28</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.5</priority>
   </url>

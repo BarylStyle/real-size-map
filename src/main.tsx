@@ -1,5 +1,5 @@
 import { StrictMode } from 'react';
-import { createRoot, hydrateRoot } from 'react-dom/client';
+import { createRoot } from 'react-dom/client';
 import { BrowserRouter } from 'react-router-dom';
 import { HelmetProvider } from 'react-helmet-async';
 import App from './App.tsx';
@@ -8,7 +8,7 @@ import './index.css';
 const basename = window.location.hostname.includes('github.io') ? '/real-size-map' : '/';
 const rootElement = document.getElementById('root')!;
 
-const app = (
+createRoot(rootElement).render(
   <StrictMode>
     <HelmetProvider>
       <BrowserRouter basename={basename}>
@@ -17,9 +17,3 @@ const app = (
     </HelmetProvider>
   </StrictMode>
 );
-
-if (rootElement.hasChildNodes()) {
-  hydrateRoot(rootElement, app);
-} else {
-  createRoot(rootElement).render(app);
-}
