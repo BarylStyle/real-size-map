@@ -136,8 +136,12 @@ function loadGoogleAnalytics() {
   document.head.appendChild(script);
 
   window.dataLayer = window.dataLayer || [];
-  window.gtag = function (...args: any[]) {
-    window.dataLayer.push(args);
+  // gtag.js rozpoznaje polecenia tylko po wpisach typu Arguments — wypchnięcie
+  // zwykłej tablicy (np. z parametrów rest) jest po cichu ignorowane i config
+  // nigdy się nie wykonuje.
+  window.gtag = function () {
+    // eslint-disable-next-line prefer-rest-params
+    window.dataLayer.push(arguments);
   };
   window.gtag('js', new Date());
   window.gtag('config', 'G-QDF2K62D0D', {
