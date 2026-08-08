@@ -9,8 +9,23 @@ interface MapProps {
   selectedCountries?: SelectedCountry[];
   onCountryClick: (countryCode: string) => void;
   onCountryMove: (code: string, newPosition: { lat: number; lng: number }) => void;
-  geoData: any;
+  geoData: GeoJSON.FeatureCollection;
   scaleMultiplier: number;
+}
+
+/** Zagnieżdżone tablice współrzędnych Leafletu — dowolnie głębokie (polygon, ring, hole). */
+type Nested<T> = T | Nested<T>[];
+
+function mapNested<In, Out>(coords: Nested<In>[], fn: (value: In) => Out): Nested<Out>[] {
+  return coords.map(item =>
+    Array.isArray(item) ? mapNested(item as Nested<In>[], fn) : fn(item as In)
+  );
+}
+
+function collectPolygons(layer: L.Layer, out: L.Polygon[] = []): L.Polygon[] {
+  if (layer instanceof L.Polygon) out.push(layer);
+  else if (layer instanceof L.FeatureGroup) layer.eachLayer(child => collectPolygons(child, out));
+  return out;
 }
 
 function MapEventHandler(props: MapProps) {
@@ -40,187 +55,107 @@ function MapEventHandler(props: MapProps) {
     Object.values(draggableLayersRef.current).forEach(layer => layer.remove());
     draggableLayersRef.current = {};
 
+    const teardowns: (() => void)[] = [];
+
     selectedCountries.forEach(selected => {
-      const feature = geoData.features.find((f: any) => f.properties['ISO3166-1-Alpha-2'] === selected.code);
+      const feature = geoData.features.find(
+        f => f.properties?.['ISO3166-1-Alpha-2'] === selected.code
+      );
       if (!feature) return;
 
       const draggableLayer = L.geoJSON(feature, {
         style: { fillColor: selected.color, fillOpacity: 0.7, color: selected.color, weight: 2 }
       }).addTo(map);
-      
-      const allPolygonLayers: L.Polygon[] = [];
-      const allCenteredProjectedCoords: any[] = [];
-      
-      const findPolygons = (layer: L.Layer) => {
-        if (layer instanceof L.Polygon) allPolygonLayers.push(layer);
-        else if (layer instanceof L.FeatureGroup) layer.eachLayer(findPolygons);
+
+      const polygons = collectPolygons(draggableLayer);
+
+      // Każdy wielokąt zapamiętujemy jako współrzędne ekranowe względem własnego środka,
+      // dzięki czemu przesuwanie sprowadza się do wyboru nowego środka i skali.
+      const centeredCoords = polygons.map(polygon => {
+        const center = map.project(
+          L.geoJSON(polygon.toGeoJSON()).getBounds().getCenter(),
+          map.getZoom()
+        );
+        return mapNested(polygon.getLatLngs() as Nested<L.LatLng>[], latlng =>
+          map.project(latlng, map.getZoom()).subtract(center)
+        );
+      });
+
+      const scaleAt = (lat: number) => getTrueSizeScale(selected.originalLat, lat, scaleMultiplier);
+
+      const render = (centerPoint: L.Point, scale: number) => {
+        polygons.forEach((polygon, index) => {
+          polygon.setLatLngs(
+            mapNested(centeredCoords[index], point =>
+              map.unproject(centerPoint.add(point.multiplyBy(scale)), map.getZoom())
+            ) as L.LatLngExpression[][]
+          );
+        });
       };
-      findPolygons(draggableLayer);
-      
-      // --- POCZĄTEK OSTATECZNEJ POPRAWKI ---
-      // ZAWSZE ufamy pozycji ze stanu aplikacji (`selected.position`) jako źródłu prawdy.
-      // Nie pobieramy jej z warstwy Leaflet, która może być nieaktualna.
-      const authoritativeCenter = selected.position;
-      const featureProjectedCenter = map.project(authoritativeCenter, map.getZoom());
-      // --- KONIEC OSTATECZNEJ POPRAWKI ---
 
-      allPolygonLayers.forEach(polygon => {
-        const tempLayer = L.geoJSON(polygon.toGeoJSON());
-        const geometricCenterOfPolygon = tempLayer.getBounds().getCenter();
-        const projectedGeometricCenter = map.project(geometricCenterOfPolygon, map.getZoom());
+      // Pozycja ze stanu aplikacji jest źródłem prawdy — warstwa Leafletu bywa nieaktualna.
+      render(
+        map.project(selected.position, map.getZoom()),
+        scaleAt(selected.position.lat)
+      );
 
-        const getCenteredProjected = (coords: any): any => {
-          if (Array.isArray(coords) && Array.isArray(coords[0])) return coords.map(getCenteredProjected);
-          return (coords as L.LatLng[]).map(latlng => map.project(latlng, map.getZoom()).subtract(projectedGeometricCenter));
-        };
-        allCenteredProjectedCoords.push(getCenteredProjected(polygon.getLatLngs()));
-      });
+      const container = map.getContainer();
+      const latLngFromPointer = (event: PointerEvent) => {
+        const rect = container.getBoundingClientRect();
+        return map.containerPointToLatLng(
+          L.point(event.clientX - rect.left, event.clientY - rect.top)
+        );
+      };
 
-      const initialScale = getTrueSizeScale(selected.originalLat, authoritativeCenter.lat, scaleMultiplier);
-      allPolygonLayers.forEach((polygon, index) => {
-        const reconstructLatLngs = (coords: any): any => {
-          if (Array.isArray(coords) && Array.isArray(coords[0])) return coords.map(reconstructLatLngs);
-          return (coords as L.Point[]).map(p => {
-            const scaledPoint = featureProjectedCenter.add(p.multiplyBy(initialScale));
-            return map.unproject(scaledPoint, map.getZoom());
-          });
-        };
-        polygon.setLatLngs(reconstructLatLngs(allCenteredProjectedCoords[index]));
-      });
-      
-      draggableLayer.on('mousedown', (e: L.LeafletMouseEvent) => {
-        L.DomEvent.preventDefault(e.originalEvent);
+      const onPointerDown = (event: PointerEvent) => {
+        event.preventDefault();
         map.dragging.disable();
-        
-        const currentLayerBounds = draggableLayer.getBounds();
-        const shapeCenterLatLng = currentLayerBounds.getCenter();
-        const shapeCenterPoint = map.project(shapeCenterLatLng, map.getZoom());
-        
-        const clickPoint = map.project(e.latlng, map.getZoom());
-        const startScale = getTrueSizeScale(selected.originalLat, shapeCenterLatLng.lat, scaleMultiplier);
-        const offset = clickPoint.subtract(shapeCenterPoint).divideBy(startScale);
-        
-        const onMouseMove = (moveEvent: L.LeafletMouseEvent) => {
-          const mousePoint = map.project(moveEvent.latlng, map.getZoom());
-          const newScale = getTrueSizeScale(selected.originalLat, moveEvent.latlng.lat, scaleMultiplier);
-          const newCenterPoint = mousePoint.subtract(offset.multiplyBy(newScale));
-          
-          requestAnimationFrame(() => {
-            allPolygonLayers.forEach((polygon, index) => {
-              const reconstructLatLngs = (coords: any): any => {
-                if (Array.isArray(coords) && Array.isArray(coords[0])) return coords.map(reconstructLatLngs);
-                return (coords as L.Point[]).map(p => {
-                  const scaledPoint = newCenterPoint.add(p.multiplyBy(newScale));
-                  return map.unproject(scaledPoint, map.getZoom());
-                });
-              };
-              polygon.setLatLngs(reconstructLatLngs(allCenteredProjectedCoords[index]));
-            });
-          });
+
+        const shapeCenter = draggableLayer.getBounds().getCenter();
+        const startScale = scaleAt(shapeCenter.lat);
+        // Uchwyt kursora względem środka kraju, w skali niezależnej od szerokości.
+        const grabOffset = map.project(latLngFromPointer(event), map.getZoom())
+          .subtract(map.project(shapeCenter, map.getZoom()))
+          .divideBy(startScale);
+
+        const centerFor = (latlng: L.LatLng, scale: number) =>
+          map.project(latlng, map.getZoom()).subtract(grabOffset.multiplyBy(scale));
+
+        const onPointerMove = (moveEvent: PointerEvent) => {
+          const latlng = latLngFromPointer(moveEvent);
+          const scale = scaleAt(latlng.lat);
+          requestAnimationFrame(() => render(centerFor(latlng, scale), scale));
         };
 
-        const onMouseUp = (upEvent: L.LeafletMouseEvent) => {
+        const onPointerUp = (upEvent: PointerEvent) => {
+          window.removeEventListener('pointermove', onPointerMove);
+          window.removeEventListener('pointerup', onPointerUp);
           map.dragging.enable();
-          map.off('mousemove', onMouseMove);
-          map.off('mouseup', onMouseUp);
 
-          const finalScale = getTrueSizeScale(selected.originalLat, upEvent.latlng.lat, scaleMultiplier);
-          const finalCenterPoint = map.project(upEvent.latlng, map.getZoom()).subtract(offset.multiplyBy(finalScale));
-          onCountryMove(selected.code, map.unproject(finalCenterPoint, map.getZoom()));
+          const latlng = latLngFromPointer(upEvent);
+          const scale = scaleAt(latlng.lat);
+          onCountryMove(
+            selected.code,
+            map.unproject(centerFor(latlng, scale), map.getZoom())
+          );
         };
 
-        map.on('mousemove', onMouseMove);
-        map.on('mouseup', onMouseUp);
+        window.addEventListener('pointermove', onPointerMove);
+        window.addEventListener('pointerup', onPointerUp);
+      };
+
+      polygons.forEach(polygon => {
+        const element = polygon.getElement() as HTMLElement | undefined;
+        if (!element) return;
+        element.addEventListener('pointerdown', onPointerDown);
+        teardowns.push(() => element.removeEventListener('pointerdown', onPointerDown));
       });
-
-      // Touch drag support for mobile - handle directly from DOM
-      const mapElement = map.getContainer();
-      let isTouching = false;
-      
-      mapElement.addEventListener('touchstart', (e: TouchEvent) => {
-        // Check if touch started on this layer
-        const touch = e.touches[0];
-        if (!touch) return;
-        
-        // Get pixel coordinates
-        const rect = mapElement.getBoundingClientRect();
-        const x = touch.clientX - rect.left;
-        const y = touch.clientY - rect.top;
-        
-        // Convert to lat/lng
-        const latlng = map.containerPointToLatLng(L.point(x, y));
-        
-        // Check if point is within bounds of this draggable layer
-        const bounds = draggableLayer.getBounds();
-        if (!bounds.contains(latlng)) return;
-        
-        isTouching = true;
-        L.DomEvent.preventDefault(e);
-        map.dragging.disable();
-        
-        const currentLayerBounds = draggableLayer.getBounds();
-        const shapeCenterLatLng = currentLayerBounds.getCenter();
-        const shapeCenterPoint = map.project(shapeCenterLatLng, map.getZoom());
-        
-        const touchPoint = map.project(latlng, map.getZoom());
-        const startScale = getTrueSizeScale(selected.originalLat, shapeCenterLatLng.lat, scaleMultiplier);
-        const offset = touchPoint.subtract(shapeCenterPoint).divideBy(startScale);
-        
-        const onTouchMove = (moveEvent: TouchEvent) => {
-          if (!isTouching) return;
-          
-          const touch = moveEvent.touches[0];
-          if (!touch) return;
-          
-          const x = touch.clientX - rect.left;
-          const y = touch.clientY - rect.top;
-          const touchMoveLatlng = map.containerPointToLatLng(L.point(x, y));
-          const touchMovePoint = map.project(touchMoveLatlng, map.getZoom());
-          
-          const newScale = getTrueSizeScale(selected.originalLat, touchMoveLatlng.lat, scaleMultiplier);
-          const newCenterPoint = touchMovePoint.subtract(offset.multiplyBy(newScale));
-          
-          requestAnimationFrame(() => {
-            allPolygonLayers.forEach((polygon, index) => {
-              const reconstructLatLngs = (coords: any): any => {
-                if (Array.isArray(coords) && Array.isArray(coords[0])) return coords.map(reconstructLatLngs);
-                return (coords as L.Point[]).map(p => {
-                  const scaledPoint = newCenterPoint.add(p.multiplyBy(newScale));
-                  return map.unproject(scaledPoint, map.getZoom());
-                });
-              };
-              polygon.setLatLngs(reconstructLatLngs(allCenteredProjectedCoords[index]));
-            });
-          });
-        };
-        
-        const onTouchEnd = (endEvent: TouchEvent) => {
-          if (!isTouching) return;
-          
-          isTouching = false;
-          map.dragging.enable();
-          mapElement.removeEventListener('touchmove', onTouchMove);
-          mapElement.removeEventListener('touchend', onTouchEnd);
-          
-          const touch = endEvent.changedTouches[0];
-          if (!touch) return;
-          
-          const x = touch.clientX - rect.left;
-          const y = touch.clientY - rect.top;
-          const endLatlng = map.containerPointToLatLng(L.point(x, y));
-          const finalScale = getTrueSizeScale(selected.originalLat, endLatlng.lat, scaleMultiplier);
-          const finalCenterPoint = map.project(endLatlng, map.getZoom()).subtract(offset.multiplyBy(finalScale));
-          onCountryMove(selected.code, map.unproject(finalCenterPoint, map.getZoom()));
-        };
-        
-        mapElement.addEventListener('touchmove', onTouchMove);
-        mapElement.addEventListener('touchend', onTouchEnd);
-      }, false);
 
       draggableLayersRef.current[selected.code] = draggableLayer;
     });
 
     return () => {
+      teardowns.forEach(teardown => teardown());
       Object.values(draggableLayersRef.current).forEach(layer => layer.remove());
       draggableLayersRef.current = {};
     };
