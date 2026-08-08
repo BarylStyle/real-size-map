@@ -5,13 +5,10 @@ import { HelmetProvider } from 'react-helmet-async';
 import App from './App.tsx';
 import './index.css';
 
-const basename = window.location.hostname.includes('github.io') ? '/real-size-map' : '/';
-const rootElement = document.getElementById('root')!;
-
-createRoot(rootElement).render(
+createRoot(document.getElementById('root')!).render(
   <StrictMode>
     <HelmetProvider>
-      <BrowserRouter basename={basename}>
+      <BrowserRouter>
         <App />
       </BrowserRouter>
     </HelmetProvider>
