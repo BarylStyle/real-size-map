@@ -5,9 +5,12 @@ import 'vanilla-cookieconsent/dist/cookieconsent.css';
 declare global {
   interface Window {
     dataLayer: any[];
+    // Definiowane w index.html, przed jakimkolwiek tagiem Google.
     gtag: (...args: any[]) => void;
   }
 }
+
+const GA_ID = 'G-QDF2K62D0D';
 
 export function CookieConsentBanner() {
   useEffect(() => {
@@ -88,41 +91,34 @@ export function CookieConsentBanner() {
         },
       },
 
-      onConsent: ({ cookie }) => {
-        if (cookie.categories.includes('analytics')) {
-          loadGoogleAnalytics();
-        }
-        if (cookie.categories.includes('advertising')) {
-          enableAdSense();
-        }
-      },
-
-      onChange: ({ changedCategories, cookie }) => {
-        if (changedCategories.includes('analytics')) {
-          if (cookie.categories.includes('analytics')) {
-            loadGoogleAnalytics();
-          } else {
-            if (window.gtag) {
-              window.gtag('consent', 'update', {
-                analytics_storage: 'denied',
-              });
-            }
-          }
-        }
-        if (changedCategories.includes('advertising')) {
-          if (window.gtag) {
-            window.gtag('consent', 'update', {
-              ad_storage: cookie.categories.includes('advertising') ? 'granted' : 'denied',
-              ad_user_data: cookie.categories.includes('advertising') ? 'granted' : 'denied',
-              ad_personalization: cookie.categories.includes('advertising') ? 'granted' : 'denied',
-            });
-          }
-        }
-      },
+      onConsent: ({ cookie }) => syncConsent(cookie.categories),
+      onChange: ({ cookie }) => syncConsent(cookie.categories),
     });
   }, []);
 
   return null;
+}
+
+/**
+ * Zgłasza aktualny stan zgody do Consent Mode v2. Stan domyślny (wszystko
+ * odrzucone) ustawia index.html przed startem tagów Google — tutaj wysyłamy
+ * wyłącznie aktualizację, zawsze dla kompletu czterech sygnałów, żeby
+ * cofnięcie zgody działało tak samo jak jej udzielenie.
+ */
+function syncConsent(categories: string[]) {
+  const analytics = categories.includes('analytics') ? 'granted' : 'denied';
+  const advertising = categories.includes('advertising') ? 'granted' : 'denied';
+
+  window.gtag('consent', 'update', {
+    analytics_storage: analytics,
+    ad_storage: advertising,
+    ad_user_data: advertising,
+    ad_personalization: advertising,
+  });
+
+  if (analytics === 'granted') {
+    loadGoogleAnalytics();
+  }
 }
 
 function loadGoogleAnalytics() {
@@ -132,29 +128,9 @@ function loadGoogleAnalytics() {
 
   const script = document.createElement('script');
   script.async = true;
-  script.src = 'https://www.googletagmanager.com/gtag/js?id=G-QDF2K62D0D';
+  script.src = `https://www.googletagmanager.com/gtag/js?id=${GA_ID}`;
   document.head.appendChild(script);
 
-  window.dataLayer = window.dataLayer || [];
-  // gtag.js rozpoznaje polecenia tylko po wpisach typu Arguments — wypchnięcie
-  // zwykłej tablicy (np. z parametrów rest) jest po cichu ignorowane i config
-  // nigdy się nie wykonuje.
-  window.gtag = function () {
-    // eslint-disable-next-line prefer-rest-params
-    window.dataLayer.push(arguments);
-  };
   window.gtag('js', new Date());
-  window.gtag('config', 'G-QDF2K62D0D', {
-    anonymize_ip: true,
-  });
-}
-
-function enableAdSense() {
-  if (window.gtag) {
-    window.gtag('consent', 'update', {
-      ad_storage: 'granted',
-      ad_user_data: 'granted',
-      ad_personalization: 'granted',
-    });
-  }
+  window.gtag('config', GA_ID, { anonymize_ip: true });
 }
