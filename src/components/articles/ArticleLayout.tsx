@@ -1,4 +1,6 @@
 import { Link } from 'react-router-dom';
+import { Helmet } from 'react-helmet-async';
+import { useLocation } from 'react-router-dom';
 import { Navbar } from '../Navbar';
 import { Footer } from '../Footer';
 
@@ -11,8 +13,40 @@ interface ArticleLayoutProps {
 }
 
 export function ArticleLayout({ title, description, datePublished, readingTime, children }: ArticleLayoutProps) {
+  const { pathname } = useLocation();
+  const canonical = `https://rzeczywistyrozmiar.pl${pathname}`;
+
+  const jsonLd = {
+    '@context': 'https://schema.org',
+    '@type': 'Article',
+    headline: title,
+    description,
+    datePublished,
+    dateModified: datePublished,
+    author: {
+      '@type': 'Person',
+      name: 'Mateusz Baryła',
+      url: 'https://rzeczywistyrozmiar.pl/about',
+    },
+    publisher: {
+      '@type': 'Organization',
+      name: 'Rzeczywisty Rozmiar',
+      url: 'https://rzeczywistyrozmiar.pl',
+      logo: {
+        '@type': 'ImageObject',
+        url: 'https://rzeczywistyrozmiar.pl/favicon.svg',
+      },
+    },
+    mainEntityOfPage: { '@type': 'WebPage', '@id': canonical },
+    inLanguage: 'pl',
+  };
+
   return (
-    <div className="min-h-screen bg-[#121212] text-white flex flex-col">
+    <>
+      <Helmet>
+        <script type="application/ld+json">{JSON.stringify(jsonLd)}</script>
+      </Helmet>
+      <div className="min-h-screen bg-[#121212] text-white flex flex-col">
       <Navbar />
 
       <article className="max-w-4xl mx-auto w-full px-4 py-10 flex-1">
@@ -60,5 +94,6 @@ export function ArticleLayout({ title, description, datePublished, readingTime, 
       </article>
       <Footer />
     </div>
+    </>
   );
 }
