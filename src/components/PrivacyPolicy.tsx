@@ -14,15 +14,42 @@ export function PrivacyPolicy() {
             <h2 className="text-2xl font-semibold text-white mb-3">1. Informacje ogólne</h2>
             <p>
               Niniejsza Polityka Prywatności określa zasady przetwarzania i ochrony danych osobowych 
-              przekazanych przez Użytkowników w związku z korzystaniem ze strony internetowej 
-              Rzeczywisty Rozmiar dostępnej pod adresem https://www.rzeczywistyrozmiar.pl.
+              przekazanych przez Użytkowników w związku z korzystaniem ze strony internetowej
+              Rzeczywisty Rozmiar dostępnej pod adresem https://rzeczywistyrozmiar.pl.
             </p>
           </section>
 
           <section>
             <h2 className="text-2xl font-semibold text-white mb-3">2. Administrator danych</h2>
-            <p>
+            <p className="mb-3">
               Administratorem danych osobowych zbieranych za pośrednictwem Strony jest BarylStyle.
+            </p>
+            <p>
+              Kontakt w sprawach dotyczących danych osobowych:{' '}
+              <a
+                href="mailto:kontakt@rzeczywistyrozmiar.pl"
+                className="text-blue-400 hover:text-blue-300 underline"
+              >
+                kontakt@rzeczywistyrozmiar.pl
+              </a>
+            </p>
+          </section>
+
+          <section>
+            <h2 className="text-2xl font-semibold text-white mb-3">
+              2a. Podstawa prawna i okres przechowywania
+            </h2>
+            <p className="mb-3">
+              Dane zbierane przez pliki cookies analityczne i reklamowe przetwarzane są wyłącznie
+              na podstawie dobrowolnej zgody Użytkownika (art. 6 ust. 1 lit. a RODO). Zgoda może
+              zostać wycofana w każdej chwili, bez wpływu na zgodność z prawem przetwarzania
+              dokonanego przed jej wycofaniem.
+            </p>
+            <p>
+              Pliki cookies niezbędne do działania Strony przetwarzane są na podstawie prawnie
+              uzasadnionego interesu Administratora (art. 6 ust. 1 lit. f RODO). Dane analityczne
+              przechowywane są przez okres do 14 miesięcy, zgodnie z domyślnymi ustawieniami
+              Google Analytics.
             </p>
           </section>
 
@@ -35,7 +62,15 @@ export function PrivacyPolicy() {
             <ul className="list-disc list-inside space-y-2 ml-4">
               <li>Zapamiętania preferencji dotyczących zgody na pliki cookie</li>
               <li>Zbierania anonimowych statystyk odwiedzin (Google Analytics)</li>
+              <li>Wyświetlania reklam (Google AdSense)</li>
             </ul>
+            <p className="mt-3">
+              Strona stosuje mechanizm Google Consent Mode v2. Oznacza to, że do momentu wyrażenia
+              zgody przez Użytkownika narzędzia Google nie zapisują plików cookies ani nie
+              przekazują danych umożliwiających identyfikację. Zgoda zbierana jest za pomocą
+              certyfikowanej przez Google platformy zarządzania zgodą (CMP), zgodnej ze
+              standardem IAB TCF v2.2.
+            </p>
           </section>
 
           <section>
@@ -113,7 +148,13 @@ export function PrivacyPolicy() {
               <li>Usunięcia danych (prawo do bycia zapomnianym)</li>
               <li>Ograniczenia przetwarzania danych</li>
               <li>Przenoszenia danych</li>
+              <li>Wniesienia sprzeciwu wobec przetwarzania danych</li>
             </ul>
+            <p className="mt-3">
+              Użytkownikowi przysługuje również prawo wniesienia skargi do organu nadzorczego —
+              Prezesa Urzędu Ochrony Danych Osobowych (ul. Stawki 2, 00-193 Warszawa), jeżeli uzna,
+              że przetwarzanie jego danych osobowych narusza przepisy RODO.
+            </p>
           </section>
 
           <section>
@@ -123,7 +164,10 @@ export function PrivacyPolicy() {
             </p>
             <ul className="list-disc list-inside space-y-2 ml-4">
               <li>Za pomocą ustawień przeglądarki (usunięcie/blokowanie cookies)</li>
-              <li>Za pomocą panelu ustawień cookies dostępnego na stronie</li>
+              <li>
+                Za pomocą bannera zgody wyświetlanego na Stronie — ponowne otwarcie ustawień
+                jest możliwe przez link „Zarządzaj opcjami prywatności" w bannerze
+              </li>
             </ul>
             <p className="mt-3 text-sm text-gray-400">
               Informacje o zarządzaniu cookies w popularnych przeglądarkach:
@@ -156,15 +200,22 @@ export function PrivacyPolicy() {
           <section>
             <h2 className="text-2xl font-semibold text-white mb-3">10. Kontakt</h2>
             <p>
-              W razie pytań dotyczących Polityki Prywatności prosimy o kontakt przez GitHub: 
-              <a href="https://github.com/BarylStyle" className="text-blue-400 hover:text-blue-300 ml-1">
+              W razie pytań dotyczących Polityki Prywatności prosimy o kontakt:{' '}
+              <a
+                href="mailto:kontakt@rzeczywistyrozmiar.pl"
+                className="text-blue-400 hover:text-blue-300 underline"
+              >
+                kontakt@rzeczywistyrozmiar.pl
+              </a>{' '}
+              lub przez GitHub:{' '}
+              <a href="https://github.com/BarylStyle" className="text-blue-400 hover:text-blue-300">
                 @BarylStyle
               </a>
             </p>
           </section>
 
           <p className="text-sm text-gray-400 mt-8 pt-4 border-t border-gray-700">
-            Data ostatniej aktualizacji: 28 kwietnia 2026
+            Data ostatniej aktualizacji: 14 sierpnia 2026
           </p>
         </div>
       </main>

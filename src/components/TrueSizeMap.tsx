@@ -84,11 +84,12 @@ export function TrueSizeMap() {
   return (
     <div className="min-h-screen bg-[#121212] flex flex-col">
       <Navbar />
-      
-      <AboutSection />
 
-      <div className="flex-1 flex flex-col md:flex-row min-h-0 gap-4 md:gap-0 p-4 md:p-0">
-        <div className="flex-1 relative h-[60vh] md:h-auto md:min-h-0">
+      {/* Mapa dostaje stałą wysokość ekranu — AboutSection płynie pod nią,
+          więc flex-1 ścisnąłby mapę do zera na desktopie. */}
+      <div className="flex flex-col md:flex-row md:h-[calc(100vh-4rem)] gap-4 md:gap-0 p-4 md:p-0">
+        {/* flex-1 dopiero od md — na mobile flex-basis:0% zerowałby h-[60vh] */}
+        <div className="relative h-[60vh] md:h-auto md:flex-1">
           {geoData && (
             <Map
               selectedCountries={selectedCountries}
@@ -127,6 +128,8 @@ export function TrueSizeMap() {
           </div>
         </div>
       </div>
+
+      <AboutSection />
 
       <Footer />
     </div>
