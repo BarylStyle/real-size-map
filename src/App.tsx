@@ -1,6 +1,5 @@
 import { Routes, Route } from 'react-router-dom';
 import { TrueSizeMap } from './components/TrueSizeMap';
-import { CookieConsentBanner } from './components/CookieConsent';
 import { PrivacyPolicy } from './components/PrivacyPolicy';
 import { AboutMe } from './components/AboutMe';
 import { TermsOfService } from './components/TermsOfService';
@@ -46,7 +45,6 @@ function App() {
         <Route path="/artykuly/afryka-kontynent" element={<ArticleAfrica />} />
         <Route path="/artykuly/historia-kartografii" element={<ArticleCartographyHistory />} />
       </Routes>
-      <CookieConsentBanner />
     </>
   );
 }
